@@ -21,7 +21,7 @@ Ra 2 file: bản tiếng Việt và bản song ngữ. Không cần tài khoản,
 - Google Dịch miễn phí hay bị chặn (lỗi 429) ở mạng Việt Nam, nên bản này dùng Bing.
 - Chữ nằm trong hình (ảnh chụp, sơ đồ) không được dịch.
 - Hợp nhất với PDF có chữ (xuất từ Word, bài báo, sách điện tử). PDF scan cần OCR trước.
-- Lỗi thiếu VC++: chạy file `vc_redist.x64.exe` có sẵn trong thư mục `pdf2zh\build`.
+- Lỗi thiếu VC++ (báo thiếu MSVCP140 / VCRUNTIME140): tải và cài [vc_redist.x64.exe](https://aka.ms/vs/17/release/vc_redist.x64.exe) của Microsoft.
 
 ## Đã sửa gì so với bản gốc
 
