@@ -1,0 +1,41 @@
+377c377
+<             "ja": 1.1, "ko": 1.2, "en": 1.2, "ar": 1.0, "ru": 0.8, "uk": 0.8, "ta": 0.8
+---
+>             "ja": 1.1, "ko": 1.2, "en": 1.2, "ar": 1.0, "ru": 0.8, "uk": 0.8, "ta": 0.8, "vi": 1.3  # pdf-dich-viet: room for stacked diacritics
+388a389,399
+>         def char_adv(ch, size):  # pdf-dich-viet: width of one char, same font choice as below
+>             f = None
+>             try:
+>                 if self.fontmap["tiro"].to_unichr(ord(ch)) == ch:
+>                     f = "tiro"
+>             except Exception:
+>                 pass
+>             if f is None:
+>                 return self.noto.char_lengths(ch, size)[0]
+>             return self.fontmap[f].char_width(ord(ch)) * size
+> 
+403a415,420
+>             if not brk:  # pdf-dich-viet: single-line source paragraph cannot wrap -> shrink text to fit (min 70%)
+>                 plain = re.sub(r"\{\s*v[\d\s]+\}", "", new)
+>                 total = sum(char_adv(c, size) for c in plain)
+>                 room = x1 - x
+>                 if total > room > 0:
+>                     size = size * max(0.7, room / total)
+435a453,463
+>                 # pdf-dich-viet: wrap at spaces for space-separated scripts (Vietnamese, Latin)
+>                 wrap_word = False
+>                 if (not vy_regex and brk and not ch.isspace() and x > x0 + 0.1 * size
+>                         and (ptr < 2 or new[ptr - 2].isspace())):
+>                     wend = ptr - 1
+>                     wlen = 0.0
+>                     while wend < len(new) and not new[wend].isspace() and new[wend] != "{":
+>                         wlen += char_adv(new[wend], size)
+>                         wend += 1
+>                     if x + wlen > x1 + 0.1 * size and wlen <= x1 - x0:
+>                         wrap_word = True
+439a468
+>                     or wrap_word
+452c481
+<                 if brk and x + adv > x1 + 0.1 * size:  # 到达右边界且原文段落存在换行
+---
+>                 if brk and (x + adv > x1 + 0.1 * size or wrap_word):  # 到达右边界且原文段落存在换行
